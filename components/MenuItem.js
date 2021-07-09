@@ -11,18 +11,20 @@ function MenuItem(props) {
     <View style={styles.container}>
       <View style={styles.photoContainer}>
         <Image
-          source={require("../assets/placeholder-image.png")}
+          source= {props.imageSource}
           style={styles.photo}
         />
       </View>
-      <Text style={{ fontWeight: "bold" }}>{"FOOD NAME"}</Text>
-      <Text>Price: ${1000}</Text>
+      <Text style={{ fontWeight: "bold" }}>{props.name}</Text>
+      <Text>Price: ${props.price}</Text>
       <Text>Quantity: {quantity}</Text>
       <View style={styles.buttonsContainer}>
         <Button
           title="-"
           onPress={() => {
+            setQuantity(quantity <= 0? true: quantity -1)
             console.log("minus pressed");
+            //use set quantatity 
             // TODO (part 2): decrease quantity by 1
             // watch out for negative quantity
           }}
@@ -30,18 +32,21 @@ function MenuItem(props) {
         <Button
           title="+"
           onPress={() => {
+            setQuantity(quantity + 1)
             console.log("plus pressed");
-            // TODO (part 2): increase quantity by 1
           }}
         />
       </View>
       <Text>Special Instructions: {null}</Text>
       <TextInput
         placeholder="Type instructions here"
-        onSubmitEditing={({ nativeEvent }) => {
+        onSubmitEditing={({ nativeEvent , currentTarget }) => {
           console.log(nativeEvent.text);
           // TODO (part 3): Update special instructions text
-          nativeEvent.target.clear();
+          <TextInput onChangeText = {onChangeText} value = {text}/>
+          //set text 
+          
+          currentTarget.target.clear();
         }}
       />
     </View>
@@ -53,22 +58,24 @@ const styles = StyleSheet.create({
     display: "flex",
     flexDirection: "row",
     flexWrap: "wrap",
-    rowGap: "10px",
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "space-between",
-    borderStyle: "solid",
-    borderWidth: "2px",
-    width: "90%",
+    // borderStyle: "solid",
+    // borderWidth: 2,
+    width: "90%", 
     padding: 30,
     margin: 20,
   },
   photoContainer: {
     padding: 5,
+    width: 100,
+    height: 100,
   },
   photo: {
     resizeMode: "contain",
-    width: "75%",
+    width: 0,
+    padding: 0,
     padding: 50,
   },
   buttonsContainer: {
